@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using OrganizerTransport.Interfaces;
+using OrganizerTransport.Models;
+using OrganizerTransport.Repositorios;
 
 namespace OrganizerTransport
 {
@@ -24,6 +27,8 @@ namespace OrganizerTransport
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.Configure<Settings>(o => { o.configuration = (IConfiguration)Configuration; });
+            services.AddTransient<ISaldo, Saldo_Repositorio>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,8 +38,14 @@ namespace OrganizerTransport
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseMvc();
+            app.UseCors(data =>
+            data.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            app.UseMvc(Routes => {
+                Routes.MapRoute(
+                    name: "Default",
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                );
+            });
         }
     }
 }

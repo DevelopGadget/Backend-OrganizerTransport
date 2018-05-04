@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using OrganizerTransport.Interfaces;
 
 namespace OrganizerTransport.Controllers
 {
     [Route("[controller]")]
     public class SaldoController : Controller
     {
+        private readonly ISaldo _Saldo;
+
+        public SaldoController(ISaldo saldo) => this._Saldo = saldo;       
+
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()

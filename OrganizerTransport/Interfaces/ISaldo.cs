@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OrganizerTransport.Interfaces
 {
-    interface ISaldo
+    public interface ISaldo
     {
         Task<IEnumerable<Saldo>> Get();
         Task<Saldo> Get(string _id);
