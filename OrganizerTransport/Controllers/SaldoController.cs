@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using OrganizerTransport.Interfaces;
+using OrganizerTransport.Models;
 
 namespace OrganizerTransport.Controllers
 {
@@ -16,16 +19,41 @@ namespace OrganizerTransport.Controllers
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                IEnumerable<Saldo> saldos = await _Saldo.Get();
+                if (saldos == null)
+                {
+                    return StatusCode(StatusCodes.Status406NotAcceptable, "No Hay Documentos");
+                }
+                return Ok(JsonConvert.SerializeObject(saldos));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(string id)
         {
-            return "value";
+            try
+            {
+                if (string.IsNullOrEmpty(id) || id.Length < 24)
+                {
+                    return StatusCode(StatusCodes.Status406NotAcceptable, "Id Invalid");
+                }
+                Saldo saldo = await _Saldo.Get(id);
+                if(saldo == null) return StatusCode(StatusCodes.Status406NotAcceptable, "No Hay Documentos");
+                return Ok(JsonConvert.SerializeObject(saldo));
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ha Ocurrido Un Error Vuelva A Intentar");
+            }
         }
 
         // POST api/values
