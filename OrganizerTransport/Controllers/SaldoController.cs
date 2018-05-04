@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace OrganizerTransport.Controllers
 {
-    [Route("api/[controller]")]
-    public class ValuesController : Controller
+    [Route("[controller]")]
+    public class SaldoController : Controller
     {
         // GET api/values
         [HttpGet]

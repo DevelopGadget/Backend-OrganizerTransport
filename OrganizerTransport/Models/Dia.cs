@@ -5,10 +5,17 @@ using System.Threading.Tasks;
 
 namespace OrganizerTransport.Models
 {
-    public class Horario
+    public class Dia
     {
-        public DateTime Dia { get; set; }
+        public DateTime Hoy { get; set; }
         public int Ida { get; set; }
         public int Venida { get; set; }
+
+        public Dia(DateTime hoy, int ida, int venida)
+        {
+            Hoy = hoy;
+            Ida = ida;
+            Venida = venida;
+        }
     }
 }

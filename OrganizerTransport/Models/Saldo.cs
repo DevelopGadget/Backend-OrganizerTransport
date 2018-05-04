@@ -1,11 +1,15 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OrganizerTransport.Models
 {
     public class Saldo
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
+        public double SaldoGen { get; set; }
+        public List<Dia> Horario { get; set; }
     }
 }
