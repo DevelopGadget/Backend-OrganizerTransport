@@ -24,10 +24,7 @@ namespace OrganizerTransport.Controllers
             try
             {
                 IEnumerable<Saldo> saldos = await _Saldo.Get();
-                if (saldos == null)
-                {
-                    return StatusCode(StatusCodes.Status406NotAcceptable, "No Hay Documentos");
-                }
+                if (saldos == null)return StatusCode(StatusCodes.Status406NotAcceptable, "No Hay Documentos");
                 return Ok(JsonConvert.SerializeObject(saldos));
             }
             catch (Exception e)
@@ -42,10 +39,7 @@ namespace OrganizerTransport.Controllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id) || id.Length < 24)
-                {
-                    return StatusCode(StatusCodes.Status406NotAcceptable, "Id Invalid");
-                }
+                if (string.IsNullOrEmpty(id) || id.Length < 24) return StatusCode(StatusCodes.Status406NotAcceptable, "Id Invalid");
                 Saldo saldo = await _Saldo.Get(id);
                 if(saldo == null) return StatusCode(StatusCodes.Status406NotAcceptable, "No Hay Documentos");
                 return Ok(JsonConvert.SerializeObject(saldo));
@@ -62,7 +56,7 @@ namespace OrganizerTransport.Controllers
         {
             try
             {
-                if (!ModelState.IsValid) return BadRequest(ModelState);
+                if (!ModelState.IsValid) return StatusCode(StatusCodes.Status406NotAcceptable, ModelState);
                 await _Saldo.Post(saldo);
                 return Ok("Creado");
             }
@@ -74,8 +68,20 @@ namespace OrganizerTransport.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<IActionResult> Put(string id, [FromBody]Saldo saldo)
         {
+            try
+            {
+                if (string.IsNullOrEmpty(id) || id.Length < 24) return StatusCode(StatusCodes.Status406NotAcceptable, "Id Invalid");
+                if (!ModelState.IsValid) return StatusCode(StatusCodes.Status406NotAcceptable, ModelState);
+                var h = await _Saldo.Put(id, saldo);
+                if (h.MatchedCount > 0) return Ok("Editado");
+                else return StatusCode(StatusCodes.Status406NotAcceptable, "No Editado");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ha Ocurrido Un Error Vuelva A Intentar");
+            }
         }
 
         // DELETE api/values/5
@@ -84,10 +90,7 @@ namespace OrganizerTransport.Controllers
         {
             try
             {
-                if (string.IsNullOrEmpty(id) || id.Length < 24)
-                {
-                    return StatusCode(StatusCodes.Status406NotAcceptable, "Id Invalid");
-                }
+                if (string.IsNullOrEmpty(id) || id.Length < 24) return StatusCode(StatusCodes.Status406NotAcceptable, "Id Invalid");
                 var h = await _Saldo.Delete(id);
                 if (h.DeletedCount > 0) return Ok("Eliminado");
                 else return StatusCode(StatusCodes.Status406NotAcceptable, "No Eliminado");
