@@ -14,9 +14,9 @@ namespace OrganizerTransport.Models
 
         public Saldo(string id, double saldoGen)
         {
-            Id = id;
-            SaldoGen = saldoGen;
-            Horario = new List<Dia>();
+            this.Id = id;
+            this.SaldoGen = saldoGen;
+            this.Horario = new List<Dia>();
         }
     }
 }

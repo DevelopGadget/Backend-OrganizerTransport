@@ -13,9 +13,9 @@ namespace OrganizerTransport.Models
 
         public Dia(DateTime hoy, int ida, int venida)
         {
-            Hoy = hoy;
-            Ida = ida;
-            Venida = venida;
+            this.Hoy = hoy;
+            this.Ida = ida;
+            this.Venida = venida;
         }
     }
 }

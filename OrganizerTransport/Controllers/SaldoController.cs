@@ -58,8 +58,18 @@ namespace OrganizerTransport.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<IActionResult> Post([FromBody]Saldo saldo)
         {
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest(ModelState);
+                await _Saldo.Post(saldo);
+                return Ok("Creado");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ha Ocurrido Un Error Vuelva A Intentar");
+            }
         }
 
         // PUT api/values/5
