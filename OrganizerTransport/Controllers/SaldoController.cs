@@ -70,8 +70,22 @@ namespace OrganizerTransport.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
+            try
+            {
+                if (string.IsNullOrEmpty(id) || id.Length < 24)
+                {
+                    return StatusCode(StatusCodes.Status406NotAcceptable, "Id Invalid");
+                }
+                var h = await _Saldo.Delete(id);
+                if (h.DeletedCount > 0) return Ok("Eliminado");
+                else return StatusCode(StatusCodes.Status406NotAcceptable, "No Eliminado");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ha Ocurrido Un Error Vuelva A Intentar");
+            }
         }
     }
 }
