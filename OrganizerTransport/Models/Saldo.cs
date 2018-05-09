@@ -12,9 +12,8 @@ namespace OrganizerTransport.Models
         public double SaldoGen { get; set; }
         public List<Dia> Horario { get; set; }
 
-        public Saldo(string id, double saldoGen)
+        public Saldo(double saldoGen)
         {
-            this.Id = id;
             this.SaldoGen = saldoGen;
             this.Horario = new List<Dia>();
         }
