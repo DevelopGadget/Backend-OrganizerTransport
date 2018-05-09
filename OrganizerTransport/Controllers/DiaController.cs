@@ -51,5 +51,25 @@ namespace OrganizerTransport.Controllers
                 return BadRequest("Ha Ocurrido Un Error Vuelva A Intentar");
             }
         }
+
+        // POST api/values
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Post(string id,[FromBody]Dia Horario)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id) || id.Length < 24) return StatusCode(StatusCodes.Status406NotAcceptable, "Id Invalid");
+                Saldo saldo = await _Saldo.Get(id);
+                if (saldo == null) return StatusCode(StatusCodes.Status406NotAcceptable, "No Hay Documentos");
+                saldo.Horario.Add(Horario);
+                var h = await _Saldo.Put(id, saldo);
+                if (h.MatchedCount > 0) return Ok("Creado");
+                else return StatusCode(StatusCodes.Status406NotAcceptable, "No Editado");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ha Ocurrido Un Error Vuelva A Intentar");
+            }
+        }
     }
 }
