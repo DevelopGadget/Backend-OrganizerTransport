@@ -101,6 +101,31 @@ namespace OrganizerTransport.Controllers
             }
         }
 
-
+        // DELETE api/values/5
+        [HttpDelete("{id}/{Index}")]
+        public async Task<IActionResult> Delete(string id, int Index)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id) || id.Length < 24) return StatusCode(StatusCodes.Status406NotAcceptable, "Id Invalid");
+                Saldo saldo = await _Saldo.Get(id);
+                if (saldo == null) return StatusCode(StatusCodes.Status406NotAcceptable, "No Hay Documentos");
+                for (int i = 0; i < saldo.Horario.Count; i++)
+                {
+                    if (i == Index)
+                    {
+                        saldo.Horario.RemoveAt(Index);
+                        var h = await _Saldo.Put(id, saldo);
+                        if (h.MatchedCount > 0) return Ok("Eliminado");
+                        else return StatusCode(StatusCodes.Status406NotAcceptable, "No Eliminado");
+                    }
+                }
+                return StatusCode(StatusCodes.Status406NotAcceptable, "Index no encontrado");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ha Ocurrido Un Error Vuelva A Intentar");
+            }
+        }
     }
 }
