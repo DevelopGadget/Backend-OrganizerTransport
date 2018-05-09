@@ -61,6 +61,7 @@ namespace OrganizerTransport.Controllers
                 if (string.IsNullOrEmpty(id) || id.Length < 24) return StatusCode(StatusCodes.Status406NotAcceptable, "Id Invalid");
                 Saldo saldo = await _Saldo.Get(id);
                 if (saldo == null) return StatusCode(StatusCodes.Status406NotAcceptable, "No Hay Documentos");
+                if (!ModelState.IsValid) return StatusCode(StatusCodes.Status406NotAcceptable, ModelState);
                 saldo.Horario.Add(Horario);
                 var h = await _Saldo.Put(id, saldo);
                 if (h.MatchedCount > 0) return Ok("Creado");
@@ -71,5 +72,35 @@ namespace OrganizerTransport.Controllers
                 return BadRequest("Ha Ocurrido Un Error Vuelva A Intentar");
             }
         }
+
+        // PUT api/values/5
+        [HttpPut("{id}/{Index}")]
+        public async Task<IActionResult> Put(string id, int Index, [FromBody]Dia Horario)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(id) || id.Length < 24) return StatusCode(StatusCodes.Status406NotAcceptable, "Id Invalid");
+                Saldo saldo = await _Saldo.Get(id);
+                if (saldo == null) return StatusCode(StatusCodes.Status406NotAcceptable, "No Hay Documentos");
+                if (!ModelState.IsValid) return StatusCode(StatusCodes.Status406NotAcceptable, ModelState);
+                for (int i = 0; i < saldo.Horario.Count; i++)
+                {
+                    if(i == Index)
+                    {
+                        saldo.Horario[Index] = Horario;
+                        var h = await _Saldo.Put(id, saldo);
+                        if (h.MatchedCount > 0) return Ok("Editado");
+                        else return StatusCode(StatusCodes.Status406NotAcceptable, "No Editado");
+                    } 
+                }
+                return StatusCode(StatusCodes.Status406NotAcceptable, "Index no encontrado");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Ha Ocurrido Un Error Vuelva A Intentar");
+            }
+        }
+
+
     }
 }
