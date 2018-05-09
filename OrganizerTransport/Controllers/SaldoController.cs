@@ -73,7 +73,11 @@ namespace OrganizerTransport.Controllers
             try
             {
                 if (string.IsNullOrEmpty(id) || id.Length < 24) return StatusCode(StatusCodes.Status406NotAcceptable, "Id Invalid");
+                Saldo saldoId = await _Saldo.Get(id);
+                if (saldo == null) return StatusCode(StatusCodes.Status406NotAcceptable, "No Hay Documentos");
                 if (!ModelState.IsValid) return StatusCode(StatusCodes.Status406NotAcceptable, ModelState);
+                saldo.Horario = saldoId.Horario;
+                saldo.Id = id;
                 var h = await _Saldo.Put(id, saldo);
                 if (h.MatchedCount > 0) return Ok("Editado");
                 else return StatusCode(StatusCodes.Status406NotAcceptable, "No Editado");
