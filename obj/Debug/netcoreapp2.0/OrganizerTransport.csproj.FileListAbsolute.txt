@@ -1,0 +1,11 @@
+C:\Users\FernanPro18\source\repos\OrganizerTransport\bin\Debug\netcoreapp2.0\OrganizerTransport.deps.json
+C:\Users\FernanPro18\source\repos\OrganizerTransport\bin\Debug\netcoreapp2.0\OrganizerTransport.runtimeconfig.json
+C:\Users\FernanPro18\source\repos\OrganizerTransport\bin\Debug\netcoreapp2.0\OrganizerTransport.runtimeconfig.dev.json
+C:\Users\FernanPro18\source\repos\OrganizerTransport\bin\Debug\netcoreapp2.0\OrganizerTransport.dll
+C:\Users\FernanPro18\source\repos\OrganizerTransport\obj\Debug\netcoreapp2.0\OrganizerTransport.csprojResolveAssemblyReference.cache
+C:\Users\FernanPro18\source\repos\OrganizerTransport\obj\Debug\netcoreapp2.0\OrganizerTransport.csproj.CoreCompileInputs.cache
+C:\Users\FernanPro18\source\repos\OrganizerTransport\obj\Debug\netcoreapp2.0\OrganizerTransport.AssemblyInfoInputs.cache
+C:\Users\FernanPro18\source\repos\OrganizerTransport\obj\Debug\netcoreapp2.0\OrganizerTransport.AssemblyInfo.cs
+C:\Users\FernanPro18\source\repos\OrganizerTransport\bin\Debug\netcoreapp2.0\OrganizerTransport.pdb
+C:\Users\FernanPro18\source\repos\OrganizerTransport\obj\Debug\netcoreapp2.0\OrganizerTransport.dll
+C:\Users\FernanPro18\source\repos\OrganizerTransport\obj\Debug\netcoreapp2.0\OrganizerTransport.pdb
