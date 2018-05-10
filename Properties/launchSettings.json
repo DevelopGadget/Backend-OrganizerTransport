@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/OrganizerTransport",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:49812/",
       "sslPort": 0
@@ -9,7 +13,7 @@
   },
   "profiles": {
     "IIS Express": {
-      "commandName": "IISExpress",
+      "commandName": "Executable",
       "launchBrowser": true,
       "launchUrl": "Saldo",
       "environmentVariables": {
@@ -20,10 +24,11 @@
     },
     "OrganizerTransport": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "api/values",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ConectionMlab": "mongodb://root:12345@ds215370.mlab.com:15370/organizar-transport",
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "Database": "organizar-transport"
       },
       "applicationUrl": "http://localhost:49813/"
     }
